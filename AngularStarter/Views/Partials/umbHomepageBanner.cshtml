@@ -1,0 +1,34 @@
+﻿@using AngularStarter.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<AngRenderModel>
+@{
+    var CurrentPage = Model.Content;
+}
+
+@if (Model.isApp)
+{
+    <div id="banner-wrapper" style="background: url('{{content.bannerBackgroundImage}}') center center no-repeat;">
+        <section id="banner">
+            <h2>{{content.bannerHeader}}</h2>
+            <span class="byline">{{content.bannerSubheader}}</span>
+            <a umb-content-link="content.bannerLink" class="button">{{content.bannerLinkText}} </a>
+        </section>
+    </div>
+
+} else {
+    
+    
+
+if (CurrentPage.GetPropertyValue<bool>("HideBanner") == false)
+{
+    <!-- Banner -->
+    <div id="banner-wrapper" style="background: url('@CurrentPage.GetPropertyValue("BannerBackgroundImage")') center center no-repeat;">
+        <section id="banner">
+            <h2>@Umbraco.Field("bannerHeader")</h2>
+            <span class="byline">@Umbraco.Field("bannerSubheader")</span>
+            <a href="@Umbraco.Content(CurrentPage.GetPropertyValue("BannerLink")).Url" class="button">@Umbraco.Field("bannerLinkText")</a>
+        </section>
+    </div>
+    <!-- /Banner -->
+}
+    
+}

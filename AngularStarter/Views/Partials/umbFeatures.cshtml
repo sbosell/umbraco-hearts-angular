@@ -1,0 +1,57 @@
+﻿@using AngularStarter.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<AngRenderModel>
+
+@if (Model.isApp)
+{
+    <section class="is-features" umb-features>
+        <h2 class="major"><span>Wonderful featured pages</span></h2>
+        <div>
+            <div class="row">
+               
+                    <div class="3u" ng-repeat="feature in features">
+                        <!-- Feature -->
+                        <section class="is-feature">
+                            <a ng-href="{{feature.Url}}" class="image image-full">
+                                <img ng-src="{{feature.image}}" alt="" /></a>
+                            <h3><a ng-href="{{feature.Url}}">{{feature.Name}}</a></h3>
+                            <span ng-bind-html="html(feature.bodyText, 100)"></span>
+                        </section>
+                        <!-- /Feature -->
+                    </div>
+            
+            </div>
+        </div>
+    </section>
+
+}
+else
+{
+    // Model.Content is the current page that we're on
+    // AncestorsOrSelf is all of the ancestors this page has in the tree
+    // (1) means: go up to level 1 and stop looking for more ancestors when you get there
+    // First() gets the first ancestor found (the home page, on level 1)
+    var CurrentPage = Model.Content;
+    var homePage = CurrentPage.AncestorsOrSelf(1).First();
+
+<!-- Features -->
+<section class="is-features">
+    <h2 class="major"><span>Wonderful featured pages</span></h2>
+    <div>
+        <div class="row">
+            @foreach (var feature in homePage.Descendants("umbTextPages").Where("featuredPage"))
+            {
+                <div class="3u">
+                    <!-- Feature -->
+                    <section class="is-feature">
+                        <a href="@feature.Url" class="image image-full"><img src="@feature.GetPropertyValue("Image")" alt="" /></a>
+                        <h3><a href="@feature.Url">@feature.Name</a></h3>
+                        @Umbraco.Truncate(feature.GetPropertyValue<string>("BodyText"), 100)
+                    </section>
+                    <!-- /Feature -->
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- /Features -->
+}

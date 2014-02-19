@@ -1,0 +1,133 @@
+﻿@using AngularStarter.Models
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<AngRenderModel>
+
+
+@if (Model.isApp)
+{
+    <section class="is-blog" umb-news-overview-widget="content">
+        <h2 class="major"><span>{{content.Name}}</span></h2>
+        
+         <div>
+            <div class="row">
+                <div class="9u">
+                    <div class="content content-left">
+                        
+                        <article class="is-post">
+                            <header>
+                                <h3><a href="{{featuredNewsItem.Url}}">{{featuredNewsItem.title ? featuredNewsItem.title : featuredNewsItem.Name}}</a></h3>
+                                <span class="byline"> {{featuredNewsItem.subheader}}</span>
+                                <ul class="meta">
+                                    <li class="timestamp">{{featuredNewsItem.CreateDate}}</li>
+                                </ul>
+                            </header>
+
+                         
+                                <a ng-href="{{featuredNewsItem.Url}}" class="image image-full" ng-show="featuredNewsItem.image">
+                                    <img ng-src="{{featuredNewsItem.image}}"  alt="" /></a>
+                        
+
+                            <span ng-bind-html="html(featuredNewsItem.bodyText)"></span>
+                            
+
+                            <a ng-href="{{featuredNewsItem.Url}}" class="button">Continue Reading</a>
+                        </article>
+                        
+                    </div>
+                </div>
+                <div class="3u">
+                    <div class="sidebar">
+                        @{ Html.RenderPartial("umbLatestNewsWidget"); }
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+} else {
+    
+    
+    var CurrentPage = Model.Content;
+    // Model.Content is the current page that we're on
+    // AncestorsOrSelf is all of the ancestors this page has in the tree
+    // (1) means: go up to level 1 and stop looking for more ancestors when you get there
+    // First() gets the first ancestor found (the home page, on level 1)
+    var homePage = CurrentPage.AncestorsOrSelf(1).First();
+
+    // Find all pages with document type alias umbNewsOverview
+    // We do that using the plural, umbNewsOverviews (note the extra "s" in the end)
+    // Then take the first one, as we know there will only be on news overview page
+    var newsOverview = homePage.Descendants("umbNewsOverview").First();
+
+    // Similar to above: find all pages with document type umbNewsItem under the news overview page
+    // Then order them, first by publishDate (a property the editor can explicitly set on the news item)
+    // and then by createDate, which is set by Umbraco automatically when a page gets created.
+    // Finally, take the first 5 items to show in the news overview
+    var newsItems = newsOverview.Descendants("umbNewsItem").OrderBy("publishDate desc, createDate desc").Take(5);
+
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.GetPropertyValue<string>("Title"))
+           ? CurrentPage.Name
+           : CurrentPage.GetPropertyValue("Title");
+    
+    // The newest news item should be featured, so take the first one of the items we found
+    var featuredNewsItem = newsItems.First();
+    
+    // If the editor has not explicitly provided the "Page title" property page 
+    // then just show the name of the page otherwise show the provided title
+    var featuredNewsItemTitle = string.IsNullOrWhiteSpace(featuredNewsItem.GetPropertyValue<string>("Title"))
+        ? featuredNewsItem.Name
+        : featuredNewsItem.GetPropertyValue<string>("Title");
+    
+    // If the editor has not explicitly set the publishDate property then show the create date
+    var featuredNewsItemDateTime = featuredNewsItem.CreateDate;
+    
+    
+<!-- <h1>Starting</h1>
+<div umb-descendants doc-type="umbNewsOverview" >
+    
+    <ul>
+        <li ng-repeat="item in descendants">
+            {{item.Name}}
+        </li>
+    </ul>
+</div>
+<h1>Ending</h1> -->
+<!-- Blog -->
+<section class="is-blog">
+    <h2 class="major"><span>@pageTitle</span></h2>
+    <div>
+        <div class="row">
+            <div class="9u">
+                <div class="content content-left">
+                    <!-- Featured Post -->
+                    <article class="is-post">
+                        <header>
+                            <h3><a href="@featuredNewsItem.Url">@featuredNewsItemTitle</a></h3>
+                            <span class="byline">@featuredNewsItem.GetPropertyValue("SubHeader")</span>
+                            <ul class="meta">
+                                <li class="timestamp">@(featuredNewsItemDateTime.ToString("f"))</li>
+                            </ul>
+                        </header>
+
+                        @if (string.IsNullOrWhiteSpace(featuredNewsItem.GetPropertyValue<string>("Image")) == false)
+                        {
+                            <a href="@featuredNewsItem.Url" class="image image-full"><img src="@featuredNewsItem.GetPropertyValue("Image")" alt="" /></a>
+                        }
+
+                        @Umbraco.Truncate(featuredNewsItem.GetPropertyValue<string>("BodyText"), 200, true, false)
+
+                        <a href="@featuredNewsItem.Url" class="button">Continue Reading</a>
+                    </article>
+                    <!-- /Featured Post -->
+                </div>
+            </div>
+            <div class="3u">
+                <div class="sidebar">
+                    @{ Html.RenderPartial("umbLatestNewsWidget"); }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+}
+<!-- /Blog -->
