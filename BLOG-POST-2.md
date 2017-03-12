@@ -2,9 +2,9 @@
 
 In this post we’ll cover the backend parts of our angular app and tied it all together. If you haven’t read the first part, I recommend that you take some time to review it as I walked through some of the front end aspects of one way to integrate angular and Umbraco.
 
-*   [Umbraco hearts Angular - A Series on building an SPA application](BLOG-POST-1.md)
+*   [Umbraco Hearts Angular - A Series on building an SPA application](BLOG-POST-1.md)
 *   [Umbraco Hearts Angular Part II - Web Api and Angular’s first date](BLOG-POST-2.md)
-*   [Umbraco Hearts Angular Part III - Converting the TXT Starter Kit into an Angular App(BLOG-POST-3.md)
+*   [Umbraco Hearts Angular Part III - Converting the TXT Starter Kit into an Angular App](BLOG-POST-3.md)
 
 I recommend that you read up on how to build a web api controller for Umbraco. There is some great documentation [here](/web/20160808061044/http://our.umbraco.org/documentation/Reference/WebApi/).
 
