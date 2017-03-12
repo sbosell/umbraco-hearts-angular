@@ -5,11 +5,9 @@ Angular Umbraco Front end demo
 
 This Umbraco project is associated with the following blog posts:
 
-http://kpensar.com/blog/2014/02/17/umbraco-hearts-angular-a-series-on-building-an-spa-application/
-and
-http://kpensar.com/blog/2014/02/17/umbraco-hearts-angular-part-ii-web-api-and-angulars-first-date/
-and
-http://kpensar.com/blog/2014/02/19/umbraco-hearts-angular-part-iii-converting-the-txt-starter-kit-into-an-angular-app/
+*   [Umbraco Hearts Angular - A Series on building an SPA application](BLOG-POST-1.md)
+*   [Umbraco Hearts Angular Part II - Web Api and Angular’s first date](BLOG-POST-2.md)
+*   [Umbraco Hearts Angular Part III - Converting the TXT Starter Kit into an Angular App](BLOG-POST-3.md)
 
 It demonstrates a couple of strategies for building an Angular application using the Umbraco backend.  This demo is only that, a demo and it isn't the best way or the only way of doing things.
 
