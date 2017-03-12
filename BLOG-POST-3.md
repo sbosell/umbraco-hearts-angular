@@ -1,4 +1,4 @@
-# Part III
+# Part III Converting the TXT Starter Kit into an Angular App
 
 The Source Code is on [github](https://github.com/sbosell/umbraco-hearts-angular).
 
