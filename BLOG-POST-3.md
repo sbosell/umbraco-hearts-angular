@@ -4,7 +4,7 @@ The Source Code is on [github](https://github.com/sbosell/umbraco-hearts-angular
 
 *   [Umbraco Hearts Angular - A Series on building an SPA application](BLOG-POST-1.md)
 *   [Umbraco Hearts Angular Part II - Web Api and Angular’s first date](BLOG-POST-2.md)
-*   [Umbraco Hearts Angular Part III - Converting the TXT Starter Kit into an Angular App(BLOG-POST-3.md)
+*   [Umbraco Hearts Angular Part III - Converting the TXT Starter Kit into an Angular App](BLOG-POST-3.md)
 
 I outlined a few strategies on how to build an Angular application using Umbraco as a backend and wanted to make a few comments on my experience with the TXT Starter Kit. The starter kit is available for install in the installation process so it is easy to setup and get going.
 
